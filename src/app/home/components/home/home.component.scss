@@ -5,6 +5,7 @@
     background: url("/assets/pet.jpg");
     background-repeat: round;
     background-size: cover;
+    background-color: adjust-hue($color: #000000, $degrees: 0);
 
     @media screen and (max-width: 1366px) {
       background-size: cover;
