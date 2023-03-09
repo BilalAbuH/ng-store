@@ -1,4 +1,26 @@
 <div class="home">
   <div class="home__banner"></div>
-  <div class="home__products"></div>
+  <div class="home__products" *ngIf="products">
+    <div class="home__product" *ngFor="let product of products">
+      <pre>
+   {{ product | json }}
+  </pre
+      >
+    </div>
+
+    <app-card>
+      <table class="general" border="1">
+        <tr>
+          <td>zxc zx</td>
+        </tr>
+        <tr>
+          <td>zzczx c</td>
+        </tr>
+        <tr>
+          <td><body></body></td>
+        </tr>
+      </table>
+    </app-card>
+    <h1 class="title">asd as das</h1>
+  </div>
 </div>

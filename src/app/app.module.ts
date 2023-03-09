@@ -3,13 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+//import { MatToolbarModule } from '@angular/material/toolbar';
+//import { MatIconModule } from '@angular/material/icon';
+//import { MatButtonModule } from '@angular/material/button';
 
 import { HeaderComponent } from './components/header/header.component';
 
 import { AppComponent } from './app.component';
+import { HomeModule } from './home/home.module';
+//import { SharedModule } from './shared/shared.module';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -17,9 +20,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
+    MaterialModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
