@@ -2,19 +2,13 @@
   <div class="home__banner"></div>
   <div class="home__products" *ngIf="products">
     <div class="home__product" *ngFor="let product of products">
-      <pre>
-   {{ product | json }}
-  </pre
-      >
+      <app-card [product]="product"></app-card>
     </div>
 
     <app-card>
       <table class="general" border="1">
         <tr>
-          <td>zxc zx</td>
-        </tr>
-        <tr>
-          <td>zzczx c</td>
+          <td>AA</td>
         </tr>
         <tr>
           <td><body></body></td>
