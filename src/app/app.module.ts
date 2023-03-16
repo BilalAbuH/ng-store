@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { AdminModule } from './admin/admin.module';
 //import { MatToolbarModule } from '@angular/material/toolbar';
 //import { MatIconModule } from '@angular/material/icon';
 //import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     HomeModule,
     HttpClientModule,
+    AdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
