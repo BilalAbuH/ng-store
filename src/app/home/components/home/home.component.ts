@@ -14,9 +14,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productService.getProducts$().subscribe((data) => {
-      console.log('all products', data);
+      //console.log('all products', data);
       this.products = data;
     });
+    this.productService.fetchProducts();
   }
 
   ngOnDestroy(): void {}
