@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/product/services/product.service';
-import { IProduct } from 'src/app/shared/models';
+import { IProduct } from 'src/app/shared/components/models';
 
 @Component({
   selector: 'app-home',
@@ -10,18 +10,14 @@ import { IProduct } from 'src/app/shared/models';
 export class HomeComponent implements OnInit, OnDestroy {
   public products: IProduct[] = [];
 
-  constructor(private productsService: ProductService) {}
+  constructor(private productService: ProductService) {}
+
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.productsService.getProducts$().subscribe((data) => {
+    this.productService.getProducts$().subscribe((data) => {
       console.log('all products', data);
       this.products = data;
     });
   }
 
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-  }
+  ngOnDestroy(): void {}
 }

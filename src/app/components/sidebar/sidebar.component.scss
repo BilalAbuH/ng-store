@@ -1,0 +1,30 @@
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: white;
+  top: 0;
+  position: fixed;
+  left: -400px;
+  transition: 0.3s all ease;
+  z-index: 2;
+
+  &--open {
+    left: 0px;
+  }
+}
+
+.backdrop {
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  &--open {
+    pointer-events: all;
+    opacity: 1;
+  }
+}

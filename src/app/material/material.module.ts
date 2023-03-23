@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 
 const modules: Array<any> = [
@@ -17,16 +18,17 @@ const modules: Array<any> = [
   MatButtonModule,
   MatCardModule,
   MatTableModule,
-  MatTooltipModule,
   MatFormFieldModule,
+  MatTooltipModule,
   MatPaginatorModule,
   MatInputModule,
+  MatSortModule,
   MatMenuModule,
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, ...modules],
-  exports: modules,
+  exports: [...modules],
 })
 export class MaterialModule {}
