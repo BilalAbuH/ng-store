@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/product/services/product.service';
 import { IProduct } from 'src/app/shared/components/models';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductFormComponent } from 'src/app/shared/components/product-form/product-form.component';
 
 @Component({
   selector: 'app-admin',
@@ -27,7 +29,11 @@ export class AdminComponent {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   // ngAfterViewInit() {
   //   if (this.paginator) {
@@ -49,6 +55,7 @@ export class AdminComponent {
 
       if (this.sort) this.productsSource.sort = this.sort;
     });
+    this.productService.fetchProducts();
   }
 
   private initTable(data: IProduct[]): void {}
@@ -65,4 +72,12 @@ export class AdminComponent {
       this.productsSource.paginator.firstPage();
     }
   }
+
+  openDialog(): void {
+    this.dialog.open(ProductFormComponent, {});
+  }
+
+  //--------------------------
+
+  //--------------------------
 }
