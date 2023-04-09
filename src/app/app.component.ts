@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ng-store';
+  title = 'store';
+
+  ngOnInit() {
+    fromEvent(window, 'storage').subscribe((data) => {
+      console.log('storage event', data);
+    });
+  }
+
+  onClick() {
+    localStorage.setItem(`${Math.random() * 100}`, `${Math.random() * 100}`);
+  }
 }

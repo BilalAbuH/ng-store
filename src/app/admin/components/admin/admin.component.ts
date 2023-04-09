@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/product/services/product.service';
-import { IProduct } from 'src/app/shared/components/models';
-import { MatDialog } from '@angular/material/dialog';
 import { ProductFormComponent } from 'src/app/shared/components/product-form/product-form.component';
+import { IProduct } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-admin',
@@ -14,70 +14,63 @@ import { ProductFormComponent } from 'src/app/shared/components/product-form/pro
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent {
-  public productsSource: MatTableDataSource<IProduct> =
-    new MatTableDataSource();
-  displayedColumns: string[] = [
-    'id',
-    'title',
-    'price',
-    'description',
-    'category',
-    'image',
-    'star',
-  ];
-
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild(MatSort) sort?: MatSort;
-
   constructor(
     private productService: ProductService,
     private router: Router,
     public dialog: MatDialog
   ) {}
 
-  // ngAfterViewInit() {
-  //   if (this.paginator) {
-  //     this.productsSource.paginator = this.paginator;
-  //   }
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
-  //   // this.productsSource.sort = this.sort;
-  // }
+  public displayedColumns: Array<string> = [];
+  public dataSource: MatTableDataSource<IProduct> = new MatTableDataSource();
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.productService.getProducts$().subscribe((data) => {
-      console.log('all products', data);
-
-      this.productsSource = new MatTableDataSource(data);
-
-      if (this.paginator) {
-        this.productsSource.paginator = this.paginator;
-      }
-
-      if (this.sort) this.productsSource.sort = this.sort;
+      this.initTable(data);
+      this.initFilterAndPagination();
     });
+
     this.productService.fetchProducts();
   }
 
-  private initTable(data: IProduct[]): void {}
-
-  public editProduct(id: string): void {
-    this.router.navigate([]);
+  editProduct(id: string): void {
+    this.router.navigate(['admin/edit', id]);
   }
 
-  applyFilter($event: KeyboardEvent) {
-    const filterValue = ($event.target as HTMLInputElement).value;
-    this.productsSource.filter = filterValue.trim().toLowerCase();
+  public applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.productsSource.paginator) {
-      this.productsSource.paginator.firstPage();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 
-  openDialog(): void {
-    this.dialog.open(ProductFormComponent, {});
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(ProductFormComponent, {});
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 
-  //--------------------------
+  private initTable(data: IProduct[]): void {
+    console.log('all products', data);
+    this.displayedColumns = Object.keys(data[0]);
+    this.displayedColumns.push('edit');
+    this.dataSource = new MatTableDataSource(data);
+  }
 
-  //--------------------------
+  initFilterAndPagination() {
+    if (this.paginator && this.sort) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.initFilterAndPagination();
+  }
 }

@@ -5,14 +5,14 @@
         <button mat-icon-button (click)="openSidebar()">
           <mat-icon>menu</mat-icon>
         </button>
-        <span>Ng Store</span>
+        <span>NG Store</span>
       </div>
-    </div>
 
-    <div class="header__right">
-      <button mat-icon-button class="cart-button">
-        <mat-icon> shopping_cart </mat-icon>
-      </button>
+      <div class="header__right">
+        <button mat-icon-button>
+          <mat-icon> shopping_cart </mat-icon>
+        </button>
+      </div>
     </div>
   </mat-toolbar>
 </header>
@@ -20,6 +20,6 @@
 <div class="sidebar-container">
   <app-sidebar
     [isOpen]="sidebarOpen"
-    (onCloseSidebar)="closeSidebaar()"
+    (onCloseSidebar)="closeSidebar()"
   ></app-sidebar>
 </div>

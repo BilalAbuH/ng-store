@@ -15,15 +15,10 @@ export class StorageService {
     const rawData = localStorage.getItem(key);
 
     if (!rawData) return;
-    if (rawData) {
-      const data = JSON.parse(rawData);
-      return data;
-    }
+
+    const data = JSON.parse(rawData);
+    return data;
   }
-
-  // public editData(storageKey: string, ): void{
-
-  //}
 
   public deleteData(key: string): void {
     localStorage.removeItem(key);

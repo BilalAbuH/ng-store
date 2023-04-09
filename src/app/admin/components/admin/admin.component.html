@@ -1,102 +1,93 @@
-<div *ngIf="productsSource">
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
+<div class="admin">
+  <mat-label>Filter</mat-label>
+  <mat-form-field class="example-full-width">
     <input
       matInput
       (keyup)="applyFilter($event)"
-      placeholder="Ex. ium"
+      placeholder="Ex. Mia"
       #input
     />
   </mat-form-field>
 
-  <table
-    mat-table
-    [dataSource]="productsSource"
-    class="mat-elevation-z8"
-    matSort
-  >
-    <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>id</th>
-      <td mat-cell matTooltip="{{ element.id }}" *matCellDef="let element">
-        {{ element.id }}
-      </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>title</th>
-      <td mat-cell matTooltip="{{ element.title }}" *matCellDef="let element">
-        {{ element.title }}
-      </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>price</th>
-      <td mat-cell matTooltip="{{ element.price }}" *matCellDef="let element">
-        {{ element.price }}
-      </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>description</th>
-      <td
-        mat-cell
-        matTooltip="{{ element.description }}"
-        *matCellDef="let element"
-      >
-        {{ element.description }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>category</th>
-      <td mat-cell *matCellDef="let element">{{ element.category }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef>image</th>
-      <td mat-cell *matCellDef="let element">
-        <img src="{{ element?.image }}" width="50px" />
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="star" stickyEnd>
-      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          mat-mini-fab
-          color="primary"
-          aria-label="Edit"
-          [matMenuTriggerFor]="menu"
-        >
-          <mat-icon>menu</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="['/admin/edit', element.id]">
-            Edit
-          </button>
-          <button mat-menu-item>View</button>
-          <button mat-menu-item>Remove</button>
-        </mat-menu>
-      </td>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <ng-container *ngFor="let coloumn of displayedColumns">
+      <div [ngSwitch]="coloumn">
+        <div *ngSwitchCase="'image'">
+          <ng-container [matColumnDef]="coloumn">
+            <th mat-header-cell *matHeaderCellDef>{{ coloumn }}</th>
+            <td mat-cell *matCellDef="let element">
+              <img
+                src="{{ element[coloumn] }}"
+                alt="{{ element.description }}"
+              />
+            </td>
+          </ng-container>
+        </div>
+        <div *ngSwitchCase="'edit'">
+          <ng-container [matColumnDef]="coloumn"
+            ><th mat-header-cell *matHeaderCellDef>Edit</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-mini-fab
+                color="primary"
+                aria-label="Example icon button with a menu icon"
+                [matMenuTriggerFor]="menu"
+              >
+                <mat-icon> more_vert </mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button
+                  mat-menu-item
+                  [routerLink]="['/admin/edit', element.id]"
+                >
+                  Edit
+                </button>
+                <button mat-menu-item>Delete</button>
+                <button mat-menu-item>View</button>
+              </mat-menu>
+            </td></ng-container
+          >
+        </div>
+        <div *ngSwitchCase="'rating'">
+          <ng-container [matColumnDef]="coloumn">
+            <th mat-header-cell *matHeaderCellDef>{{ coloumn }}</th>
+            <td mat-cell *matCellDef="let element">
+              Rating: {{ element.rating.rate }} <br />
+              Count: {{ element.rating.count }}
+            </td>
+          </ng-container>
+        </div>
+        <div *ngSwitchDefault>
+          <ng-container [matColumnDef]="coloumn">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ coloumn }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="admin__text" [matTooltip]="element[coloumn]">
+                {{ element[coloumn] }}
+              </span>
+            </td>
+          </ng-container>
+        </div>
+      </div>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
   </table>
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    aria-label="Select page of users"
-  ></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
-  <h3>Flat Buttons</h3>
-  <div class="example-button-row">
-    <button mat-raised-button (click)="openDialog()">Primary</button>
-  </div>
+  <button
+    class="admin__add-product"
+    mat-fab
+    color="primary"
+    (click)="openDialog()"
+  >
+    <mat-icon> add_circle </mat-icon>
+  </button>
 </div>

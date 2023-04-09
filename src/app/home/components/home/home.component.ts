@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { debounceTime, delay } from 'rxjs';
 import { ProductService } from 'src/app/product/services/product.service';
-import { IProduct } from 'src/app/shared/components/models';
+import { IProduct } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +13,18 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private productService: ProductService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.productService.getProducts$().subscribe((data) => {
-      //console.log('all products', data);
+      console.log('all products', data);
       this.products = data;
     });
     this.productService.fetchProducts();
   }
 
   ngOnDestroy(): void {}
+
+  /*
+  1. add input to app-card component
+  2. inside app card display all product fields
+  */
 }

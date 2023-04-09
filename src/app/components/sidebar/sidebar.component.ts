@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,15 +13,21 @@ export class SidebarComponent {
 
   @Output() onCloseSidebar: EventEmitter<void> = new EventEmitter();
 
-  constructor(private router: Router) {
-    //this.router.navigate(['/admin']);
-  }
+  constructor(private router: Router, public dialog: MatDialog) {}
 
   public closeSidebar(): void {
     this.onCloseSidebar.emit();
   }
 
-  public nhome(): void {
-    this.router.navigate(['/admin']);
+  public navigateToHome(): void {
+    this.router.navigate(['/']);
+  }
+
+  public openLoginPopup(): void {
+    const dialogRef = this.dialog.open(LoginComponent, {});
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 }

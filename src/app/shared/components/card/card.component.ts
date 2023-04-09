@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IProduct, IRating } from '../models';
+import { IProduct } from '../../models';
 
 @Component({
   selector: 'app-card',
@@ -8,11 +8,4 @@ import { IProduct, IRating } from '../models';
 })
 export class CardComponent {
   @Input() product?: IProduct;
-
-  // _title: string = '';
-  // _price: number = 0;
-  // _description: string = '';
-  // _category: string = '';
-  // _image: string = '';
-  // _rating?: IRating;
 }
